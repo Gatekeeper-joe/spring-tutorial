@@ -13,10 +13,16 @@ import javax.persistence.Id;
 @Entity
 class Employee {
 
+    /** id */
     private @Id @GeneratedValue Long id;
+
+    /** name */
     private String name;
+
+    /** role */
     private String role;
 
+    /** コンストラクタ */
     Employee() {}
 
     /**
