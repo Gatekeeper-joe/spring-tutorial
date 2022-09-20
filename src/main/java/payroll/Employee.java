@@ -114,6 +114,12 @@ class Employee {
      */
     @Override
     public String toString() {
-        return "Employee{" + "id=" + this.id + ", name='" + this.name + '\'' + ", role='" + this.role + '\'' + '}';
+
+        return String.format(
+            "Employee{id=%d, name='%s', role='%s'}",
+            this.id,
+            this.name,
+            this.role
+        );
     }
 }
