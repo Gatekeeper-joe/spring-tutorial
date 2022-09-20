@@ -1,9 +1,12 @@
 package payroll;
 
+/**
+ * 検索時に従業員が見つからなかった場合に発生
+ */
 class EmployeeNotFoundException extends RuntimeException {
 
     /**
-     * 検索時に従業員が見つからなかった場合に発生
+     * 例外メッセージを返す
      * @param id
      */
     EmployeeNotFoundException(Long id) {
