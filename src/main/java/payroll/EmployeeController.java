@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class EmployeeController {
 
+    /** DI: EmployeeRepository */
     private final EmployeeRepository repository;
 
     /**
@@ -90,7 +91,6 @@ class EmployeeController {
      */
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
-
         repository.deleteById(id);
     }
 }
