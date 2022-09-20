@@ -25,6 +25,7 @@ class EmployeeController {
      */
     @Autowired
     EmployeeController(EmployeeRepository repository) {
+
         this.repository = repository;
     }
 
@@ -35,6 +36,7 @@ class EmployeeController {
      */
     @GetMapping("/employees")
     List<Employee> all() {
+
         return repository.findAll();
     }
 
@@ -45,6 +47,7 @@ class EmployeeController {
      */
     @PostMapping("/employees")
     Employee newEmployee(@RequestBody Employee newEmployee) {
+
         return repository.save(newEmployee);
     }
 
@@ -87,6 +90,7 @@ class EmployeeController {
      */
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
+
         repository.deleteById(id);
     }
 }
