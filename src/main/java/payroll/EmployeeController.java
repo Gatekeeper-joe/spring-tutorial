@@ -2,6 +2,7 @@ package payroll;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ class EmployeeController {
      * コンストラクタ
      * @param repository 従業員リポジトリ
      */
+    @Autowired
     EmployeeController(EmployeeRepository repository) {
         this.repository = repository;
     }
@@ -31,8 +33,6 @@ class EmployeeController {
      * 従業員情報をすべて取得
      * @return java.util.List<Employee>
      */
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/employees")
     List<Employee> all() {
         return repository.findAll();
@@ -57,7 +57,7 @@ class EmployeeController {
     Employee one(@PathVariable Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(id));
+            .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
     /**
