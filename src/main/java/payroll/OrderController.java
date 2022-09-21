@@ -85,9 +85,11 @@ class OrderController {
         Order newOrder = orderRepository.save(order);
 
         return ResponseEntity
-            .created(linkTo(methodOn(OrderController.class).one(newOrder.getId())
+            .created(
+                linkTo(methodOn(OrderController.class)
+                    .one(newOrder.getId())
                 )
-                    .toUri()
+                .toUri()
             )
             .body(assembler.toModel(newOrder));
     }
@@ -103,7 +105,7 @@ class OrderController {
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));
 
-        if (order.getStatus() == Status.IN_PROGRESS) {
+        if (Status.IN_PROGRESS.equals(order.getStatus())) {
             order.setStatus(Status.CANCELLED);
             return ResponseEntity.ok(assembler.toModel(orderRepository.save(order)));
         }
