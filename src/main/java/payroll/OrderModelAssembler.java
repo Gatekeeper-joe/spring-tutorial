@@ -6,7 +6,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-/** OrderModelAssemblerクラス */
+/** Orderオブジェクトをモデルへ変換するクラス */
 @Component
 class OrderModelAssembler implements RepresentationModelAssembler<Order, EntityModel<Order>> {
 
