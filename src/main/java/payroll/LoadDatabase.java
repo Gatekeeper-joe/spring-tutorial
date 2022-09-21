@@ -16,7 +16,7 @@ class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     /**
-     * リポジトリに登録した情報をログに出力
+     * DB登録を実施し、登録値をログに出力する
      * @param employeeRepository 従業員リポジトリ
      * @param orderRepository 注文リポジトリ
      * @return String
