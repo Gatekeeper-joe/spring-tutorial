@@ -16,8 +16,11 @@ class Employee {
     /** id */
     private @Id @GeneratedValue Long id;
 
-    /** name */
-    private String name;
+    /** firstName */
+    private String firstName;
+
+    /** lastName */
+    private String lastName;
 
     /** role */
     private String role;
@@ -27,12 +30,33 @@ class Employee {
 
     /**
      * コンストラクタ
-     * @param name 従業員名
+     * @param firstName 名前
+     * @param lastName 名字
      * @param role 担当名
      */
-    Employee(String name, String role) {
-        this.name = name;
+    Employee(String lastName, String firstName, String role) {
+
+        this.lastName = lastName;
+        this.firstName = firstName;
         this.role = role;
+    }
+
+    /**
+     * 従業員名を取得
+     * @return String
+     */
+    public String getName() {
+        return this.firstName + " " + this.lastName;
+    }
+
+    /**
+     * 従業員名をフィールドにセット
+     * @param name 従業員名
+     */
+    public void setName(String name) {
+        String[] parts = name.split(" ");
+        this.firstName = parts[0];
+        this.lastName = parts[1];
     }
 
     /**
@@ -44,12 +68,21 @@ class Employee {
     }
 
     /**
-     * 従業員名を取得
+     * 名前を取得
      * @return String
      */
-    public String getName() {
-        return this.name;
+    public String getFirstName() {
+        return this.firstName;
     }
+
+    /**
+     * 名字を取得
+     * @return String
+     */
+    public String getLastName() {
+        return this.lastName;
+    }
+
 
     /**
      * 担当名を取得
@@ -68,11 +101,19 @@ class Employee {
     }
 
     /**
-     * 従業員名をフィールドにセット
-     * @param name 従業員名
+     * 名前をフィールドにセット
+     * @param firstName
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * 名字をフィールドにセット
+     * @param lastName
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     /**
@@ -93,10 +134,11 @@ class Employee {
 
         if (this == o)
             return true;
-        if (!(o instanceof Employee employee))
+        if (!(o instanceof Employee))
             return false;
-        return Objects.equals(this.id, employee.id) && Objects.equals(this.name, employee.name)
-                && Objects.equals(this.role, employee.role);
+        Employee employee = (Employee) o;
+        return Objects.equals(this.id, employee.id) && Objects.equals(this.firstName, employee.firstName)
+            && Objects.equals(this.lastName, employee.lastName) && Objects.equals(this.role, employee.role);
     }
 
     /**
@@ -105,7 +147,7 @@ class Employee {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.role);
+        return Objects.hash(this.id, this.firstName, this.lastName, this.role);
     }
 
     /**
@@ -116,9 +158,10 @@ class Employee {
     public String toString() {
 
         return String.format(
-            "Employee{id=%d, name='%s', role='%s'}",
+            "Employee{id=%d, firstName='%s', lastName='%s', role='%s'}",
             this.id,
-            this.name,
+            this.firstName,
+            this.lastName,
             this.role
         );
     }
