@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/** Orderクラス */
+/**
+ * 注文エンティティ
+ */
 @Entity
 @Table(name = "CUSTOMER_ORDER")
 class Order {
@@ -107,7 +109,7 @@ class Order {
     @Override
     public String toString() {
         return String.format(
-            "Employee{id=%d, firstName='%s', lastName='%s', role='%s'}",
+            "Order{id=%d, description='%s', lastName='%s', status='%s'}",
             this.id,
             this.description,
             this.status
