@@ -6,7 +6,9 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-/** 従業員オブジェクトをモデルへ変換するクラス */
+/**
+ * 従業員オブジェクトをモデルへ変換するクラス
+ */
 @Component
 class EmployeeModelAssembler implements RepresentationModelAssembler<Employee, EntityModel<Employee>> {
 
