@@ -132,10 +132,12 @@ class Employee {
     @Override
     public boolean equals(Object o) {
 
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Employee))
+        }
+        if (!(o instanceof Employee)) {
             return false;
+        }
         Employee employee = (Employee) o;
         return Objects.equals(this.id, employee.id) && Objects.equals(this.firstName, employee.firstName)
             && Objects.equals(this.lastName, employee.lastName) && Objects.equals(this.role, employee.role);
