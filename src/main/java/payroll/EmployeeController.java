@@ -36,6 +36,7 @@ class EmployeeController {
     /**
      * コンストラクタ
      * @param repository 従業員リポジトリ
+     * @param assembler 従業員モデル変換
      */
     @Autowired
     EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
