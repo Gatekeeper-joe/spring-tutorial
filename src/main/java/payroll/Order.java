@@ -109,7 +109,7 @@ class Order {
     @Override
     public String toString() {
         return String.format(
-            "Order{id=%d, description='%s', lastName='%s', status='%s'}",
+            "Order{id=%d, description='%s', status='%s'}",
             this.id,
             this.description,
             this.status
