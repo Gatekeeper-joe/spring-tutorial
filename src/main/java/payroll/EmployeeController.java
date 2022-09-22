@@ -30,7 +30,9 @@ class EmployeeController {
     /** DI: EmployeeRepository */
     private final EmployeeRepository repository;
 
-    /** EmployeeModelAssemblerクラス */
+    /**
+     * EmployeeModelAssemblerクラス
+     */
     private final EmployeeModelAssembler assembler;
 
     /**

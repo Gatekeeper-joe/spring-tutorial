@@ -13,19 +13,29 @@ import javax.persistence.Id;
 @Entity
 class Employee {
 
-    /** id */
+    /**
+     * id
+     */
     private @Id @GeneratedValue Long id;
 
-    /** firstName */
+    /**
+     * firstName
+     */
     private String firstName;
 
-    /** lastName */
+    /**
+     * lastName
+     */
     private String lastName;
 
-    /** role */
+    /**
+     * role
+     */
     private String role;
 
-    /** コンストラクタ */
+    /**
+     * コンストラクタ
+     */
     Employee() {}
 
     /**

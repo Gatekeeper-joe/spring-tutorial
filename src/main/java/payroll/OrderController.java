@@ -24,7 +24,9 @@ class OrderController {
     /** DI:orderRepository */
     private final OrderRepository orderRepository;
 
-    /** OrderModelAssemblerクラス */
+    /**
+     * OrderModelAssemblerクラス
+     */
     private final OrderModelAssembler assembler;
 
     /**
