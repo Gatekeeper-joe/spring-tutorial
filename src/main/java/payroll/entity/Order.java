@@ -1,4 +1,6 @@
-package payroll;
+package payroll.entity;
+
+import payroll.enums.Status;
 
 import java.util.Objects;
 
@@ -12,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CUSTOMER_ORDER")
-class Order {
+public class Order {
 
     /**
      * id
@@ -39,7 +41,7 @@ class Order {
      * @param description 注文内容
      * @param status 状態
      */
-    Order(String description, Status status) {
+    public Order(String description, Status status) {
 
         this.description = description;
         this.status = status;

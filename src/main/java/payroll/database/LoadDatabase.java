@@ -1,10 +1,15 @@
-package payroll;
+package payroll.database;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import payroll.entity.Order;
+import payroll.repositry.OrderRepository;
+import payroll.enums.Status;
+import payroll.entity.Employee;
+import payroll.repositry.EmployeeRepository;
 
 /**
  * DB内の情報を読み込むクラス
