@@ -67,7 +67,7 @@ class OrderController {
     @GetMapping("/orders/{id}")
     EntityModel<Order> one(@PathVariable Long id) {
 
-        Order order = orderRepository.findById(id) //
+        Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));
 
         return assembler.toModel(order);
@@ -112,7 +112,7 @@ class OrderController {
 
         return ResponseEntity
             .status(HttpStatus.METHOD_NOT_ALLOWED)
-            .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //
+            .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE)
             .body(Problem.create()
                 .withTitle("Method not allowed")
                 .withDetail("You can't cancel an order that is in the " + order.getStatus() + " status"));
@@ -129,13 +129,13 @@ class OrderController {
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));
 
-        /** 注文が正常に通った場合 */
+        // 注文が正常に通った場合
         if (order.getStatus() == Status.IN_PROGRESS) {
             order.setStatus(Status.COMPLETED);
             return ResponseEntity.ok(assembler.toModel(orderRepository.save(order)));
         }
 
-        /** 注文が通らなかった場合 */
+        //注文が通らなかった場合
         return ResponseEntity
             .status(HttpStatus.METHOD_NOT_ALLOWED)
             .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE)
