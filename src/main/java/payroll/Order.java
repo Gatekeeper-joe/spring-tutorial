@@ -14,16 +14,24 @@ import javax.persistence.Table;
 @Table(name = "CUSTOMER_ORDER")
 class Order {
 
-    /** id */
+    /**
+     * id
+     */
     private @Id @GeneratedValue Long id;
 
-    /** 注文内容 */
+    /**
+     * 注文内容
+     */
     private String description;
 
-    /** ステータス */
+    /**
+     * ステータス
+     */
     private Status status;
 
-    /** コンストラクタ */
+    /**
+     * コンストラクタ
+     */
     Order() {}
 
     /**
@@ -61,17 +69,26 @@ class Order {
         return this.status;
     }
 
-    /** idをフィールドにセット */
+    /**
+     * idをフィールドにセット
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /** 注文内容をフィールドにセット */
+    /**
+     * 注文内容をフィールドにセット
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /** 状態をフィールドにセット */
+    /**
+     * 状態をフィールドにセット
+     * @param status
+     */
     public void setStatus(Status status) {
         this.status = status;
     }
