@@ -1,4 +1,4 @@
-package payroll;
+package payroll.entity;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * 従業員情報を保存
  */
 @Entity
-class Employee {
+public class Employee {
 
     /**
      * id
@@ -36,7 +36,7 @@ class Employee {
     /**
      * コンストラクタ
      */
-    Employee() {}
+    public Employee() {}
 
     /**
      * コンストラクタ
@@ -44,7 +44,7 @@ class Employee {
      * @param lastName 名字
      * @param role 担当名
      */
-    Employee(String lastName, String firstName, String role) {
+    public Employee(String lastName, String firstName, String role) {
 
         this.lastName = lastName;
         this.firstName = firstName;

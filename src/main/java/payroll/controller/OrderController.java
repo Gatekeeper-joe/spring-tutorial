@@ -1,4 +1,4 @@
-package payroll;
+package payroll.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -9,6 +9,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import payroll.assembler.OrderModelAssembler;
+import payroll.exception.OrderNotFoundException;
+import payroll.repositry.OrderRepository;
+import payroll.entity.Order;
+import payroll.enums.Status;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  * 注文用コントローラ
  */
 @RestController
-class OrderController {
+public class OrderController {
     /** DI:orderRepository */
     private final OrderRepository orderRepository;
 
@@ -35,7 +40,7 @@ class OrderController {
      * @param assembler オブジェクト
      */
     @Autowired
-    OrderController(OrderRepository orderRepository, OrderModelAssembler assembler) {
+    public OrderController(OrderRepository orderRepository, OrderModelAssembler assembler) {
 
         this.orderRepository = orderRepository;
         this.assembler = assembler;
@@ -46,7 +51,7 @@ class OrderController {
      * @return CollectionModel<EntityModel<Order>>
      */
     @GetMapping("/orders")
-    CollectionModel<EntityModel<Order>> all() {
+    public CollectionModel<EntityModel<Order>> all() {
 
         List<EntityModel<Order>> orders = orderRepository.findAll().stream()
             .map(assembler::toModel)
@@ -67,7 +72,7 @@ class OrderController {
      * @return EntityModel<Order>
      */
     @GetMapping("/orders/{id}")
-    EntityModel<Order> one(@PathVariable Long id) {
+    public EntityModel<Order> one(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));
@@ -81,7 +86,7 @@ class OrderController {
      * @return ResponseEntity<EntityModel<Order>>
      */
     @PostMapping("/orders")
-    ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order) {
+    public ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order) {
 
         order.setStatus(Status.IN_PROGRESS);
         Order newOrder = orderRepository.save(order);
@@ -102,7 +107,7 @@ class OrderController {
      * @return ResponseEntity
      */
     @DeleteMapping("/orders/{id}/cancel")
-    ResponseEntity<?> cancel(@PathVariable Long id) {
+    public ResponseEntity<?> cancel(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));
@@ -126,7 +131,7 @@ class OrderController {
      * @return 注文エンティティ
      */
     @PutMapping("/orders/{id}/complete")
-    ResponseEntity<?> complete(@PathVariable Long id) {
+    public ResponseEntity<?> complete(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));

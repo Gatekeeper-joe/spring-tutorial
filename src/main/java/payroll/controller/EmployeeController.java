@@ -1,7 +1,6 @@
-package payroll;
+package payroll.controller;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import payroll.entity.Employee;
+import payroll.assembler.EmployeeModelAssembler;
+import payroll.exception.EmployeeNotFoundException;
+import payroll.repositry.EmployeeRepository;
 
 /**
  * 従業員情報用のコントローラ
  */
 @RestController
-class EmployeeController {
+public class EmployeeController {
 
     /** DI: EmployeeRepository */
     private final EmployeeRepository repository;
@@ -41,7 +44,7 @@ class EmployeeController {
      * @param assembler 従業員モデル変換
      */
     @Autowired
-    EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
+    public EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
 
         this.repository = repository;
         this.assembler = assembler;
@@ -54,7 +57,7 @@ class EmployeeController {
      * @return CollectionModel<EntityModel < Employee>>
      */
     @GetMapping("/employees")
-    CollectionModel<EntityModel<Employee>> all() {
+    public CollectionModel<EntityModel<Employee>> all() {
 
         List<EntityModel<Employee>> employees = repository.findAll().stream()
             .map(assembler::toModel)
@@ -69,7 +72,7 @@ class EmployeeController {
      * @return Employee
      */
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
+    public ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
 
         EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
 
@@ -84,7 +87,7 @@ class EmployeeController {
      * @return EntityModel<Employee>
      */
     @GetMapping("/employees/{id}")
-    EntityModel<Employee> one(@PathVariable Long id) {
+    public EntityModel<Employee> one(@PathVariable Long id) {
 
         Employee employee = repository.findById(id)
             .orElseThrow(() -> new EmployeeNotFoundException(id));
@@ -99,7 +102,7 @@ class EmployeeController {
      * @return ResponseEntity
      */
     @PutMapping("/employees/{id}")
-    ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+    public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 
         Employee updatedEmployee = repository.findById(id)
             .map(employee -> {
@@ -125,7 +128,7 @@ class EmployeeController {
      * @return ResponseEntity
      */
     @DeleteMapping("/employees/{id}")
-    ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 
         repository.deleteById(id);
 
