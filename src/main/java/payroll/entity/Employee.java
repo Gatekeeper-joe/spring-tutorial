@@ -45,48 +45,4 @@ public class Employee {
         this.firstName = firstName;
         this.role = role;
     }
-
-    /**
-     * 従業員オブジェクトと一致するかチェック
-     * @param o オブジェクト
-     * @return boolean
-     */
-    @Override
-    public boolean equals(Object o) {
-
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Employee)) {
-            return false;
-        }
-        Employee employee = (Employee) o;
-        return Objects.equals(this.id, employee.id) && Objects.equals(this.firstName, employee.firstName)
-            && Objects.equals(this.lastName, employee.lastName) && Objects.equals(this.role, employee.role);
-    }
-
-    /**
-     * 従業員情報をもとにハッシュ値を生成
-     * @return int
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.firstName, this.lastName, this.role);
-    }
-
-    /**
-     * 従業員情報から特定の文字列を生成
-     * @return String
-     */
-    @Override
-    public String toString() {
-
-        return String.format(
-            "Employee{id=%d, firstName='%s', lastName='%s', role='%s'}",
-            this.id,
-            this.firstName,
-            this.lastName,
-            this.role
-        );
-    }
 }
