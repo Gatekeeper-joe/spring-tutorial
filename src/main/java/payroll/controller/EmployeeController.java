@@ -44,7 +44,7 @@ public class EmployeeController {
      * @param assembler 従業員モデル変換
      */
     @Autowired
-    EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
+    public EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
 
         this.repository = repository;
         this.assembler = assembler;
@@ -72,7 +72,7 @@ public class EmployeeController {
      * @return Employee
      */
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
+    public ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
 
         EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
 
@@ -102,7 +102,7 @@ public class EmployeeController {
      * @return ResponseEntity
      */
     @PutMapping("/employees/{id}")
-    ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+    public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 
         Employee updatedEmployee = repository.findById(id)
             .map(employee -> {
@@ -128,7 +128,7 @@ public class EmployeeController {
      * @return ResponseEntity
      */
     @DeleteMapping("/employees/{id}")
-    ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 
         repository.deleteById(id);
 
