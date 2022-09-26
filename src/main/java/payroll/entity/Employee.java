@@ -36,7 +36,7 @@ public class Employee {
     /**
      * コンストラクタ
      */
-    Employee() {}
+    public Employee() {}
 
     /**
      * コンストラクタ
