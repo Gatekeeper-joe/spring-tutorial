@@ -1,5 +1,7 @@
 package payroll.entity;
 
+import lombok.Data;
+
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -11,26 +13,19 @@ import javax.persistence.Id;
  * 従業員情報を保存
  */
 @Entity
+@Data
 public class Employee {
 
-    /**
-     * id
-     */
+    /** id */
     private @Id @GeneratedValue Long id;
 
-    /**
-     * firstName
-     */
+    /** firstName */
     private String firstName;
 
-    /**
-     * lastName
-     */
+    /** lastName */
     private String lastName;
 
-    /**
-     * role
-     */
+    /** role */
     private String role;
 
     /**
@@ -48,89 +43,6 @@ public class Employee {
 
         this.lastName = lastName;
         this.firstName = firstName;
-        this.role = role;
-    }
-
-    /**
-     * 従業員名を取得
-     * @return String
-     */
-    public String getName() {
-        return this.firstName + " " + this.lastName;
-    }
-
-    /**
-     * 従業員名をフィールドにセット
-     * @param name 従業員名
-     */
-    public void setName(String name) {
-        String[] parts = name.split(" ");
-        this.firstName = parts[0];
-        this.lastName = parts[1];
-    }
-
-    /**
-     * 従業員idを取得
-     * @return Long
-     */
-    public Long getId() {
-        return this.id;
-    }
-
-    /**
-     * 名前を取得
-     * @return String
-     */
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    /**
-     * 名字を取得
-     * @return String
-     */
-    public String getLastName() {
-        return this.lastName;
-    }
-
-
-    /**
-     * 担当名を取得
-     * @return String
-     */
-    public String getRole() {
-        return this.role;
-    }
-
-    /**
-     * idをフィールドにセット
-     * @param id 従業員id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * 名前をフィールドにセット
-     * @param firstName
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * 名字をフィールドにセット
-     * @param lastName
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * 担当名をフィールドにセット
-     * @param role 担当名
-     */
-    public void setRole(String role) {
         this.role = role;
     }
 

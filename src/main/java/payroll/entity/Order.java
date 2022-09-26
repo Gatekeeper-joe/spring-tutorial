@@ -1,5 +1,6 @@
 package payroll.entity;
 
+import lombok.Data;
 import payroll.enums.Status;
 
 import java.util.Objects;
@@ -13,28 +14,23 @@ import javax.persistence.Table;
  * 注文エンティティ
  */
 @Entity
+@Data
 @Table(name = "CUSTOMER_ORDER")
 public class Order {
 
-    /**
-     * id
-     */
-    private @Id @GeneratedValue Long id;
+    /** id */
+    @Id @GeneratedValue private Long id;
 
-    /**
-     * 注文内容
-     */
+    /** 注文内容 */
     private String description;
 
-    /**
-     * ステータス
-     */
+    /** ステータス */
     private Status status;
 
     /**
      * コンストラクタ
      */
-    public Order() {}
+    Order() {}
 
     /**
      * コンストラクタ
@@ -44,54 +40,6 @@ public class Order {
     public Order(String description, Status status) {
 
         this.description = description;
-        this.status = status;
-    }
-
-    /**
-     * idを取得
-     * @return id
-     */
-    public Long getId() {
-        return this.id;
-    }
-
-    /**
-     * 注文内容を取得
-     * @return 説明
-     */
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
-     * 状態を取得
-     * @return 状態
-     */
-    public Status getStatus() {
-        return this.status;
-    }
-
-    /**
-     * idをフィールドにセット
-     * @param id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * 注文内容をフィールドにセット
-     * @param description
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * 状態をフィールドにセット
-     * @param status
-     */
-    public void setStatus(Status status) {
         this.status = status;
     }
 
