@@ -1,5 +1,7 @@
 package payroll.entity;
 
+import lombok.Data;
+
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -11,26 +13,19 @@ import javax.persistence.Id;
  * 従業員情報を保存
  */
 @Entity
+@Data
 public class Employee {
 
-    /**
-     * id
-     */
+    /** id */
     private @Id @GeneratedValue Long id;
 
-    /**
-     * firstName
-     */
+    /** firstName */
     private String firstName;
 
-    /**
-     * lastName
-     */
+    /** lastName */
     private String lastName;
 
-    /**
-     * role
-     */
+    /** role */
     private String role;
 
     /**
@@ -56,7 +51,7 @@ public class Employee {
      * @return String
      */
     public String getName() {
-        return this.firstName + " " + this.lastName;
+        return this.lastName + " " + this.firstName;
     }
 
     /**
@@ -65,116 +60,7 @@ public class Employee {
      */
     public void setName(String name) {
         String[] parts = name.split(" ");
-        this.firstName = parts[0];
-        this.lastName = parts[1];
-    }
-
-    /**
-     * 従業員idを取得
-     * @return Long
-     */
-    public Long getId() {
-        return this.id;
-    }
-
-    /**
-     * 名前を取得
-     * @return String
-     */
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    /**
-     * 名字を取得
-     * @return String
-     */
-    public String getLastName() {
-        return this.lastName;
-    }
-
-
-    /**
-     * 担当名を取得
-     * @return String
-     */
-    public String getRole() {
-        return this.role;
-    }
-
-    /**
-     * idをフィールドにセット
-     * @param id 従業員id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * 名前をフィールドにセット
-     * @param firstName
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * 名字をフィールドにセット
-     * @param lastName
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * 担当名をフィールドにセット
-     * @param role 担当名
-     */
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    /**
-     * 従業員オブジェクトと一致するかチェック
-     * @param o オブジェクト
-     * @return boolean
-     */
-    @Override
-    public boolean equals(Object o) {
-
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Employee)) {
-            return false;
-        }
-        Employee employee = (Employee) o;
-        return Objects.equals(this.id, employee.id) && Objects.equals(this.firstName, employee.firstName)
-            && Objects.equals(this.lastName, employee.lastName) && Objects.equals(this.role, employee.role);
-    }
-
-    /**
-     * 従業員情報をもとにハッシュ値を生成
-     * @return int
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.firstName, this.lastName, this.role);
-    }
-
-    /**
-     * 従業員情報から特定の文字列を生成
-     * @return String
-     */
-    @Override
-    public String toString() {
-
-        return String.format(
-            "Employee{id=%d, firstName='%s', lastName='%s', role='%s'}",
-            this.id,
-            this.firstName,
-            this.lastName,
-            this.role
-        );
+        this.lastName = parts[0];
+        this.firstName = parts[1];
     }
 }
