@@ -71,13 +71,23 @@ public class OrderController {
      * @param id
      * @return EntityModel<Order>
      */
-    @GetMapping("/orders/{id}")
+    @GetMapping("/orders/{id:[0-9]+}")
     public EntityModel<Order> one(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
             .orElseThrow(() -> new OrderNotFoundException(id));
 
         return assembler.toModel(order);
+    }
+
+    /**
+     * パラメータに文字列が入った場合に例外をスロー
+     * @param id 従業員id
+     */
+    @GetMapping("/orders/{id:[^0-9]+}")
+    public EntityModel<Order> one(@PathVariable String id) {
+
+        throw new OrderNotFoundException(id);
     }
 
     /**

@@ -12,13 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import payroll.entity.Employee;
 import payroll.assembler.EmployeeModelAssembler;
 import payroll.exception.EmployeeNotFoundException;
@@ -49,7 +43,6 @@ public class EmployeeController {
         this.repository = repository;
         this.assembler = assembler;
     }
-
 
     /**
      * 従業員情報をすべて取得
@@ -86,13 +79,23 @@ public class EmployeeController {
      * @param id 従業員id
      * @return EntityModel<Employee>
      */
-    @GetMapping("/employees/{id}")
+    @GetMapping("/employees/{id:[0-9]+}")
     public EntityModel<Employee> one(@PathVariable Long id) {
 
         Employee employee = repository.findById(id)
             .orElseThrow(() -> new EmployeeNotFoundException(id));
 
         return assembler.toModel(employee);
+    }
+
+    /**
+     * パラメータに文字列が入った場合に例外をスロー
+     * @param id 従業員id
+     */
+    @GetMapping("/employees/{id:[^0-9]+}")
+    public EntityModel<Employee> one(@PathVariable String id) {
+
+        throw new EmployeeNotFoundException(id);
     }
 
     /**
@@ -131,7 +134,6 @@ public class EmployeeController {
     public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 
         repository.deleteById(id);
-
         return ResponseEntity.noContent().build();
     }
 }
