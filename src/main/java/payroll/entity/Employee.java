@@ -45,4 +45,22 @@ public class Employee {
         this.firstName = firstName;
         this.role = role;
     }
+
+    /**
+     * 従業員名を取得
+     * @return String
+     */
+    public String getName() {
+        return this.lastName + " " + this.firstName;
+    }
+
+    /**
+     * 従業員名をフィールドにセット
+     * @param name 従業員名
+     */
+    public void setName(String name) {
+        String[] parts = name.split(" ");
+        this.lastName = parts[0];
+        this.firstName = parts[1];
+    }
 }
