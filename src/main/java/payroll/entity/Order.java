@@ -30,7 +30,7 @@ public class Order {
     /**
      * コンストラクタ
      */
-    Order() {}
+    public Order() {}
 
     /**
      * コンストラクタ
