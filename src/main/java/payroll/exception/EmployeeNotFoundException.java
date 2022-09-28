@@ -6,7 +6,7 @@ package payroll.exception;
 public class EmployeeNotFoundException extends RuntimeException {
 
     /**
-     * 例外メッセージを返す
+     * コンストラクタ
      * @param id
      */
     public EmployeeNotFoundException(Long id) {

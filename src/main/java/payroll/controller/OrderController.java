@@ -71,7 +71,7 @@ public class OrderController {
      * @param id
      * @return EntityModel<Order>
      */
-    @GetMapping("/orders/{id}")
+    @GetMapping("/orders/{id:[0-9]+}")
     public EntityModel<Order> one(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
@@ -106,7 +106,7 @@ public class OrderController {
      * @param id
      * @return ResponseEntity
      */
-    @DeleteMapping("/orders/{id}/cancel")
+    @DeleteMapping("/orders/{id:[0-9]+}")
     public ResponseEntity<?> cancel(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
@@ -130,7 +130,7 @@ public class OrderController {
      * @param id
      * @return 注文エンティティ
      */
-    @PutMapping("/orders/{id}/complete")
+    @PutMapping("/orders/{id:[0-9]+}")
     public ResponseEntity<?> complete(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)

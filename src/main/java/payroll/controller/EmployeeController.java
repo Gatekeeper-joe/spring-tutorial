@@ -12,13 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import payroll.entity.Employee;
 import payroll.assembler.EmployeeModelAssembler;
 import payroll.exception.EmployeeNotFoundException;
@@ -50,7 +44,6 @@ public class EmployeeController {
         this.assembler = assembler;
     }
 
-
     /**
      * 従業員情報をすべて取得
      *
@@ -64,6 +57,20 @@ public class EmployeeController {
             .collect(Collectors.toList());
 
         return CollectionModel.of(employees, linkTo(methodOn(EmployeeController.class).all()).withSelfRel());
+    }
+
+    /**
+     * 従業員の詳細情報を取得
+     * @param id 従業員id
+     * @return EntityModel<Employee>
+     */
+    @GetMapping("/employees/{id:[0-9]+}")
+    public EntityModel<Employee> one(@PathVariable Long id) {
+
+        Employee employee = repository.findById(id)
+            .orElseThrow(() -> new EmployeeNotFoundException(id));
+
+        return assembler.toModel(employee);
     }
 
     /**
@@ -82,26 +89,12 @@ public class EmployeeController {
     }
 
     /**
-     * 従業員の詳細情報を取得
-     * @param id 従業員id
-     * @return EntityModel<Employee>
-     */
-    @GetMapping("/employees/{id}")
-    public EntityModel<Employee> one(@PathVariable Long id) {
-
-        Employee employee = repository.findById(id)
-            .orElseThrow(() -> new EmployeeNotFoundException(id));
-
-        return assembler.toModel(employee);
-    }
-
-    /**
      * 従業員情報を更新
      * @param newEmployee Employeeオブジェクト
      * @param id 従業員id
      * @return ResponseEntity
      */
-    @PutMapping("/employees/{id}")
+    @PutMapping("/employees/{id:[0-9]+}")
     public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 
         Employee updatedEmployee = repository.findById(id)
@@ -128,11 +121,10 @@ public class EmployeeController {
      * @param id 従業員id
      * @return ResponseEntity
      */
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/employees/{id:[0-9]+}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 
         repository.deleteById(id);
-
         return ResponseEntity.noContent().build();
     }
 }
