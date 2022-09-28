@@ -2,12 +2,9 @@ package payroll.entity;
 
 import lombok.Data;
 
-import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 
 /**
  * 従業員情報を保存
@@ -39,10 +36,10 @@ public class Employee {
      * @param lastName 名字
      * @param role 担当名
      */
-    public Employee(String lastName, String firstName, String role) {
+    public Employee(String firstName, String lastName, String role) {
 
-        this.lastName = lastName;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
     }
 
