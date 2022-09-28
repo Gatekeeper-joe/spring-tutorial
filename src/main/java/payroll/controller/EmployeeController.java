@@ -12,10 +12,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import payroll.entity.Employee;
 import payroll.assembler.EmployeeModelAssembler;
 import payroll.exception.EmployeeNotFoundException;
+import payroll.form.EmployeeForm;
 import payroll.repositry.EmployeeRepository;
 
 /**
@@ -75,17 +77,23 @@ public class EmployeeController {
 
     /**
      * 従業員情報を新規登録
-     * @param newEmployee 従業員オブジェクト
+     * @param employeeForm 従業員オブジェクト
      * @return Employee
      */
     @PostMapping("/employees")
-    public ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
+    public ResponseEntity<?> newEmployee( @RequestBody @Validated EmployeeForm employeeForm ) {
 
-        EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
+        Employee newEmployee = new Employee(
+            employeeForm.getFirstName(),
+            employeeForm.getLastName(),
+            employeeForm.getRole()
+        );
 
-        return ResponseEntity
-            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-            .body(entityModel);
+            EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
+
+            return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
     }
 
     /**
