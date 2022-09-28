@@ -60,6 +60,20 @@ public class EmployeeController {
     }
 
     /**
+     * 従業員の詳細情報を取得
+     * @param id 従業員id
+     * @return EntityModel<Employee>
+     */
+    @GetMapping("/employees/{id:[0-9]+}")
+    public EntityModel<Employee> one(@PathVariable Long id) {
+
+        Employee employee = repository.findById(id)
+            .orElseThrow(() -> new EmployeeNotFoundException(id));
+
+        return assembler.toModel(employee);
+    }
+
+    /**
      * 従業員情報を新規登録
      * @param newEmployee 従業員オブジェクト
      * @return Employee
@@ -75,36 +89,12 @@ public class EmployeeController {
     }
 
     /**
-     * 従業員の詳細情報を取得
-     * @param id 従業員id
-     * @return EntityModel<Employee>
-     */
-    @GetMapping("/employees/{id:[0-9]+}")
-    public EntityModel<Employee> one(@PathVariable Long id) {
-
-        Employee employee = repository.findById(id)
-            .orElseThrow(() -> new EmployeeNotFoundException(id));
-
-        return assembler.toModel(employee);
-    }
-
-    /**
-     * パラメータに文字列が入った場合に例外をスロー
-     * @param id 従業員id
-     */
-    @GetMapping("/employees/{id:[^0-9]+}")
-    public EntityModel<Employee> one(@PathVariable String id) {
-
-        throw new EmployeeNotFoundException(id);
-    }
-
-    /**
      * 従業員情報を更新
      * @param newEmployee Employeeオブジェクト
      * @param id 従業員id
      * @return ResponseEntity
      */
-    @PutMapping("/employees/{id}")
+    @PutMapping("/employees/{id}/edit")
     public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 
         Employee updatedEmployee = repository.findById(id)
@@ -130,7 +120,7 @@ public class EmployeeController {
      * @param id 従業員id
      * @return ResponseEntity
      */
-    @DeleteMapping("/employees/{id}")
+    @DeleteMapping("/employees/{id}/delete")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 
         repository.deleteById(id);

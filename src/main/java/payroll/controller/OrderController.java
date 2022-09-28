@@ -81,16 +81,6 @@ public class OrderController {
     }
 
     /**
-     * パラメータに文字列が入った場合に例外をスロー
-     * @param id 従業員id
-     */
-    @GetMapping("/orders/{id:[^0-9]+}")
-    public EntityModel<Order> one(@PathVariable String id) {
-
-        throw new OrderNotFoundException(id);
-    }
-
-    /**
      * 注文情報を登録
      * @param order 注文情報
      * @return ResponseEntity<EntityModel<Order>>
