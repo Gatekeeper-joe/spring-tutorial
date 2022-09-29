@@ -90,9 +90,8 @@ public class OrderController {
     @PostMapping("/orders")
     public ResponseEntity<EntityModel<Order>> newOrder(@RequestBody @Validated OrderForm orderForm) {
 
-        Order order = new Order();
+        Order order = new Order(orderForm.getDescription(), orderForm.getStatus());
 
-        order.setDescription(orderForm.getDescription());
         order.setStatus(Status.IN_PROGRESS);
         Order newOrder = orderRepository.save(order);
 
