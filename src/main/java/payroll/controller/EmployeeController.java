@@ -77,11 +77,11 @@ public class EmployeeController {
 
     /**
      * 従業員情報を新規登録
-     * @param employeeForm 従業員オブジェクト
+     * @param employeeForm 従業員フォームオブジェクト
      * @return Employee
      */
     @PostMapping("/employees")
-    public ResponseEntity<?> newEmployee( @RequestBody @Validated EmployeeForm employeeForm ) {
+    public ResponseEntity<?> newEmployee(@RequestBody @Validated EmployeeForm employeeForm) {
 
         Employee newEmployee = new Employee(
             employeeForm.getFirstName(),
@@ -89,11 +89,11 @@ public class EmployeeController {
             employeeForm.getRole()
         );
 
-            EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
+        EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
 
-            return ResponseEntity
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(entityModel);
+        return ResponseEntity
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+            .body(entityModel);
     }
 
     /**
