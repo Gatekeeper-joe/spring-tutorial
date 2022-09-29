@@ -16,7 +16,4 @@ public class OrderForm {
     @NotBlank
     @Length(min = 11, max = 50)
     private String description;
-
-    /** ステータス */
-    private Status status;
 }
