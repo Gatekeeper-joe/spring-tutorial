@@ -9,13 +9,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- * 従業員情報へのリクエストをバリデート
+ * 従業員フォーム
  */
 @Data
 public class EmployeeForm {
-
-    /** id */
-    private @Id @GeneratedValue Long id;
 
     /** firstName */
     @Size(max = 5)
