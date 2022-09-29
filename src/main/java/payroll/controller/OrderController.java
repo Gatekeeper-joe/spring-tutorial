@@ -8,9 +8,11 @@ import org.springframework.hateoas.mediatype.problem.Problem;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import payroll.assembler.OrderModelAssembler;
 import payroll.exception.OrderNotFoundException;
+import payroll.form.OrderForm;
 import payroll.repositry.OrderRepository;
 import payroll.entity.Order;
 import payroll.enums.Status;
@@ -82,12 +84,15 @@ public class OrderController {
 
     /**
      * 注文情報を登録
-     * @param order 注文情報
+     * @param orderForm 注文フォームオブジェクト
      * @return ResponseEntity<EntityModel<Order>>
      */
     @PostMapping("/orders")
-    public ResponseEntity<EntityModel<Order>> newOrder(@RequestBody Order order) {
+    public ResponseEntity<EntityModel<Order>> newOrder(@RequestBody @Validated OrderForm orderForm) {
 
+        Order order = new Order();
+
+        order.setDescription(orderForm.getDescription());
         order.setStatus(Status.IN_PROGRESS);
         Order newOrder = orderRepository.save(order);
 
