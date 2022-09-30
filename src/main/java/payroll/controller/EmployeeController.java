@@ -98,12 +98,21 @@ public class EmployeeController {
 
     /**
      * 従業員情報を更新
-     * @param newEmployee Employeeオブジェクト
+     * @param employeeForm 従業員フォームオブジェクト
      * @param id 従業員id
      * @return ResponseEntity
      */
     @PutMapping("/employees/{id:[0-9]+}")
-    public ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+    public ResponseEntity<?> replaceEmployee(
+        @RequestBody @Validated EmployeeForm employeeForm,
+        @PathVariable Long id
+    ) {
+
+        Employee newEmployee = new Employee(
+            employeeForm.getFirstName(),
+            employeeForm.getLastName(),
+            employeeForm.getRole()
+        );
 
         Employee updatedEmployee = repository.findById(id)
             .map(employee -> {
