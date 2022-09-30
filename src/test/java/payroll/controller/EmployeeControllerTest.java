@@ -77,14 +77,51 @@ class EmployeeControllerTest {
         mockMvc.perform(get("/employees/10")).andExpect(status().isNotFound());
         mockMvc.perform(get("/employees/abc")).andExpect(status().isNotFound());
 
-        // レスポンスログ確認（レスポンスの検証は別途します）
+        // レスポンスログ確認
+        log.info("【レスポンス】");
+        log.info(result.getResponse().getContentAsString(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * one
+     * @throws Exception
+     */
+    @Test
+    void test_one_データ未存在() throws Exception {
+
+        MvcResult result = mockMvc.perform(
+            get("/employees/10").contentType(MediaType.APPLICATION_JSON)
+        ).andReturn();
+
+        // 検証 - レスポンス
+        assertEquals(HttpStatus.NOT_FOUND.value(), result.getResponse().getStatus());
+
+        // レスポンスログ確認
+        log.info("【レスポンス】");
+        log.info(result.getResponse().getContentAsString(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * one
+     * @throws Exception
+     */
+    @Test
+    void test_one_パスパラメータ不正() throws Exception {
+
+        MvcResult result = mockMvc.perform(
+            get("/employees/abc").contentType(MediaType.APPLICATION_JSON)
+        ).andReturn();
+
+        // 検証 - レスポンス
+        assertEquals(HttpStatus.NOT_FOUND.value(), result.getResponse().getStatus());
+
+        // レスポンスログ確認
         log.info("【レスポンス】");
         log.info(result.getResponse().getContentAsString(StandardCharsets.UTF_8));
     }
 
     /**
      * newEmployee
-     * ステータスコード200になることを確認
      * @throws Exception
      */
     @Test
@@ -95,10 +132,9 @@ class EmployeeControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         // 処理実行
-        MvcResult result = mockMvc.perform(
-            post("/employees")
-                .content(objectMapper.writeValueAsString(newEmployee))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+        MvcResult result = mockMvc.perform(post("/employees")
+            .content(objectMapper.writeValueAsString(newEmployee))
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andReturn();
 
         // 検証 - レスポンス
@@ -110,43 +146,71 @@ class EmployeeControllerTest {
     }
 
     /**
-     * test_newEmployee_isNull
-     * firstName / lastNameがnull
+     * newEmployee
      * @throws Exception
      */
     @Test
-    void test_newEmployee_isNull() throws Exception {
+    void test_newEmployee_名前未入力() throws Exception {
 
-        Employee firstNameIsNull = new Employee("", "佐藤", "平社員");
-        Employee lastNameIsNull = new Employee("太郎", "", "平社員");
-        Employee nameIsNull = new Employee("", "", "平社員");
+        Employee employee = new Employee("", "佐藤", "平社員");
 
         ObjectMapper objectMapper = new ObjectMapper();
 
+        // 処理実行
         mockMvc.perform(post("/employees")
-            .content(objectMapper.writeValueAsString(firstNameIsNull))
-            .contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isBadRequest());
-
-        mockMvc.perform(post("/employees")
-            .content(objectMapper.writeValueAsString(lastNameIsNull))
-            .contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isBadRequest());
-
-        mockMvc.perform(post("/employees")
-            .content(objectMapper.writeValueAsString(nameIsNull))
-            .contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isBadRequest());
+            .content(objectMapper.writeValueAsString(employee))
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andExpect(status().isBadRequest());
     }
+
     /**
-     * test_newEmployee_isOvered
-     * roleが19文字以上
+     * newEmployee
      * @throws Exception
      */
     @Test
-    void test_newEmployee_isOvered() throws Exception {
+    void test_newEmployee_名字未入力() throws Exception {
 
-        Employee newEmployee = new Employee("太郎", "佐藤", "平社員平社員平社員平社員平社員平社員平社員");
+        Employee employee = new Employee("太郎", "", "平社員");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 処理実行
+        mockMvc.perform(post("/employees")
+            .content(objectMapper.writeValueAsString(employee))
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andExpect(status().isBadRequest());
+    }
+
+    /**
+     * newEmployee
+     * @throws Exception
+     */
+    @Test
+    void test_newEmployee_氏名未入力() throws Exception {
+
+        Employee employee = new Employee("", "", "平社員");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 処理実行
+        mockMvc.perform(post("/employees")
+            .content(objectMapper.writeValueAsString(employee))
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andExpect(status().isBadRequest());
+    }
+
+
+    /**
+     * newEmployee
+     * @throws Exception
+     */
+    @Test
+    void test_newEmployee_役職文字数超過() throws Exception {
+
+        Employee newEmployee = new Employee(
+            "太郎",
+            "佐藤",
+            "平社員平社員平社員平社員平社員平社員平社員");
 
         ObjectMapper objectMapper = new ObjectMapper();
 
