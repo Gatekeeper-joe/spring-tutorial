@@ -1,4 +1,4 @@
-package com.example.payroll;
+package payroll.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
